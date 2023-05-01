@@ -6,12 +6,26 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spark.NET.API", "Spark.NET.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spark.NET.API", "Spark.NET.API\Spark.NET.API\Spark.NET.API.csproj", "{28306D94-B48B-4FE3-BA70-09AE2EA7C58B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spark.NET.Shared", "Spark.NET.Shared", "{0301C514-8292-4B6F-BFC4-43113A860512}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spark.NET.Shared.Infrastructure", "Spark.NET.Shared.Infrastructure\Spark.NET.Shared.Infrastructure.csproj", "{170D6694-3128-414D-88A5-C22E102B98AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spark.NET.Shared.Entities", "Spark.NET.Shared.Entities\Spark.NET.Shared.Entities.csproj", "{2577D345-E0CA-4E65-8765-F5417B0D9217}"
+EndProject
 Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{28306D94-B48B-4FE3-BA70-09AE2EA7C58B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{28306D94-B48B-4FE3-BA70-09AE2EA7C58B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28306D94-B48B-4FE3-BA70-09AE2EA7C58B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28306D94-B48B-4FE3-BA70-09AE2EA7C58B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{170D6694-3128-414D-88A5-C22E102B98AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{170D6694-3128-414D-88A5-C22E102B98AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{170D6694-3128-414D-88A5-C22E102B98AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{170D6694-3128-414D-88A5-C22E102B98AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2577D345-E0CA-4E65-8765-F5417B0D9217}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2577D345-E0CA-4E65-8765-F5417B0D9217}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2577D345-E0CA-4E65-8765-F5417B0D9217}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2577D345-E0CA-4E65-8765-F5417B0D9217}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,5 +33,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{28306D94-B48B-4FE3-BA70-09AE2EA7C58B} = {0BB5239D-59BB-4042-ADDD-59CE348FA51A}
+		{170D6694-3128-414D-88A5-C22E102B98AF} = {0301C514-8292-4B6F-BFC4-43113A860512}
+		{2577D345-E0CA-4E65-8765-F5417B0D9217} = {0301C514-8292-4B6F-BFC4-43113A860512}
 	EndGlobalSection
 EndGlobal
