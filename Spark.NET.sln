@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparkles.NET", "{6DFFEF53-08F8-4DEE-AE96-6B79D90D89C5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spark.NET.API", "Spark.NET.API", "{0BB5239D-59BB-4042-ADDD-59CE348FA51A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spark.NET.API", "Spark.NET.API\Spark.NET.API\Spark.NET.API.csproj", "{28306D94-B48B-4FE3-BA70-09AE2EA7C58B}"
+EndProject
+Global
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{28306D94-B48B-4FE3-BA70-09AE2EA7C58B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28306D94-B48B-4FE3-BA70-09AE2EA7C58B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28306D94-B48B-4FE3-BA70-09AE2EA7C58B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28306D94-B48B-4FE3-BA70-09AE2EA7C58B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{28306D94-B48B-4FE3-BA70-09AE2EA7C58B} = {0BB5239D-59BB-4042-ADDD-59CE348FA51A}
+	EndGlobalSection
+EndGlobal
