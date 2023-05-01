@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "G:\\Work\\Development\\SparkMyProject\\Spark.NET\\Spark.NET.Shared.Infrastructure\\Spark.NET.Shared.Infrastructure.csproj": {}
+    "G:\\Work\\Development\\SparkMyProject\\Spark.NET\\Spark.NET.Shared\\Spark.NET.Shared.Infrastructure\\Spark.NET.Shared.Infrastructure.csproj": {}
   },
   "projects": {
-    "G:\\Work\\Development\\SparkMyProject\\Spark.NET\\Spark.NET.Shared.Infrastructure\\Spark.NET.Shared.Infrastructure.csproj": {
+    "G:\\Work\\Development\\SparkMyProject\\Spark.NET\\Spark.NET.Shared\\Spark.NET.Shared.Infrastructure\\Spark.NET.Shared.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Work\\Development\\SparkMyProject\\Spark.NET\\Spark.NET.Shared.Infrastructure\\Spark.NET.Shared.Infrastructure.csproj",
+        "projectUniqueName": "G:\\Work\\Development\\SparkMyProject\\Spark.NET\\Spark.NET.Shared\\Spark.NET.Shared.Infrastructure\\Spark.NET.Shared.Infrastructure.csproj",
         "projectName": "Spark.NET.Shared.Infrastructure",
-        "projectPath": "G:\\Work\\Development\\SparkMyProject\\Spark.NET\\Spark.NET.Shared.Infrastructure\\Spark.NET.Shared.Infrastructure.csproj",
+        "projectPath": "G:\\Work\\Development\\SparkMyProject\\Spark.NET\\Spark.NET.Shared\\Spark.NET.Shared.Infrastructure\\Spark.NET.Shared.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\vinni\\.nuget\\packages\\",
-        "outputPath": "G:\\Work\\Development\\SparkMyProject\\Spark.NET\\Spark.NET.Shared.Infrastructure\\obj\\",
+        "outputPath": "G:\\Work\\Development\\SparkMyProject\\Spark.NET\\Spark.NET.Shared\\Spark.NET.Shared.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\vinni\\AppData\\Roaming\\NuGet\\NuGet.Config",

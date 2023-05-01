@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "q7bVA2vGewuJ3mS3LrssGZx9+LkoP7LeD8zgzBski5OPU6DkD4nsoa9kSxObpmkXcWfkGMj7sg9HgvOdO0PgWg==",
+  "dgSpecHash": "3b4+EwTH+Bg2vBgc/WERdt3w9TIA2o2Q2kWiit9pq8yTh/qyfT36NymVLyfQewtkiWdx0hGJYein4/VVhXK7eA==",
   "success": true,
-  "projectFilePath": "G:\\Work\\Development\\SparkMyProject\\Spark.NET\\Spark.NET.Shared.Entities\\Spark.NET.Shared.Entities.csproj",
+  "projectFilePath": "G:\\Work\\Development\\SparkMyProject\\Spark.NET\\Spark.NET.Shared\\Spark.NET.Shared.Entities\\Spark.NET.Shared.Entities.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
