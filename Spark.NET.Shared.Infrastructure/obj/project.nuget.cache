@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "TQZwby40fVM/NjXdMTm/9NAZ2qetG7C/hg8Quey0a1nZcpzzfyUF883cnTX9YkjCiAMmp4laNTSoniHzU1v24A==",
+  "dgSpecHash": "Critkhezkj2YXgq87AAer+kTSYy2fWArzXXRZE9Qgcq9nMKwn2+z/mkQIxLQBYm9guHBiHlNWNj9CNsHSnFSwA==",
   "success": true,
   "projectFilePath": "G:\\Work\\Development\\SparkMyProject\\Spark.NET\\Spark.NET.Shared\\Spark.NET.Shared.Infrastructure\\Spark.NET.Shared.Infrastructure.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\vinni\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\vinni\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\vinni\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
+    "C:\\Users\\vinni\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
