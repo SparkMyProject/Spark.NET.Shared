@@ -1,6 +1,7 @@
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Spark.NET.Infrastructure.AppSettings.Models;
 
 namespace Spark.NET.Infrastructure.Services;
 
@@ -15,5 +16,11 @@ public class ServiceStartup
     {
         // Add all of your services here
         Authentication.InitializeJwtService.RegisterService(services, configuration);
+    }
+
+    public static void ConfigureSettings(IServiceCollection services, IConfiguration configuration)
+    {
+        InitializeAppSettings.RegisterService(services, configuration);
+        services.Configure<ConnectionStringsSettings>()
     }
 }
