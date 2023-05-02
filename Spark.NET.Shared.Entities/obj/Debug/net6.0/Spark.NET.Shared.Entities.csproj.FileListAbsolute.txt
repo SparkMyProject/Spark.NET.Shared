@@ -1,0 +1,12 @@
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Entities\bin\Debug\net6.0\Spark.NET.Shared.Entities.deps.json
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Entities\bin\Debug\net6.0\Spark.NET.Shared.Entities.dll
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Entities\bin\Debug\net6.0\Spark.NET.Shared.Entities.pdb
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Entities\obj\Debug\net6.0\Spark.NET.Shared.Entities.csproj.AssemblyReference.cache
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Entities\obj\Debug\net6.0\Spark.NET.Shared.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Entities\obj\Debug\net6.0\Spark.NET.Shared.Entities.AssemblyInfoInputs.cache
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Entities\obj\Debug\net6.0\Spark.NET.Shared.Entities.AssemblyInfo.cs
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Entities\obj\Debug\net6.0\Spark.NET.Shared.Entities.csproj.CoreCompileInputs.cache
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Entities\obj\Debug\net6.0\Spark.NET.Shared.Entities.dll
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Entities\obj\Debug\net6.0\refint\Spark.NET.Shared.Entities.dll
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Entities\obj\Debug\net6.0\Spark.NET.Shared.Entities.pdb
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Entities\obj\Debug\net6.0\ref\Spark.NET.Shared.Entities.dll

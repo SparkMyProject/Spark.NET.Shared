@@ -1,0 +1,15 @@
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Infrastructure\bin\Debug\net6.0\Spark.NET.Shared.Infrastructure.deps.json
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Infrastructure\bin\Debug\net6.0\Spark.NET.Shared.Infrastructure.dll
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Infrastructure\bin\Debug\net6.0\Spark.NET.Shared.Infrastructure.pdb
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Infrastructure\bin\Debug\net6.0\Spark.NET.Shared.Entities.dll
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Infrastructure\bin\Debug\net6.0\Spark.NET.Shared.Entities.pdb
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Infrastructure\obj\Debug\net6.0\Spark.NET.Shared.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Infrastructure\obj\Debug\net6.0\Spark.NET.Shared.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Infrastructure\obj\Debug\net6.0\Spark.NET.Shared.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Infrastructure\obj\Debug\net6.0\Spark.NET.Shared.Infrastructure.AssemblyInfo.cs
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Infrastructure\obj\Debug\net6.0\Spark.NET.Shared.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Infrastructure\obj\Debug\net6.0\Spark.NET.Shared.Infrastructure.csproj.CopyComplete
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Infrastructure\obj\Debug\net6.0\Spark.NET.Shared.Infrastructure.dll
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Infrastructure\obj\Debug\net6.0\refint\Spark.NET.Shared.Infrastructure.dll
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Infrastructure\obj\Debug\net6.0\Spark.NET.Shared.Infrastructure.pdb
+C:\Users\Vinniehat\Documents\Development\Spark.NET\Spark.NET.Shared\Spark.NET.Shared.Infrastructure\obj\Debug\net6.0\ref\Spark.NET.Shared.Infrastructure.dll

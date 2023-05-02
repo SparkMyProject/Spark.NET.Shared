@@ -8,8 +8,8 @@ public class ServiceStartup
 {
     public static void RegisterServicesDiscovery(IServiceCollection services, params Assembly[] assemblies)
     {
-        services.AddServiced(assemblies);
-        services.AddAutoMapper(assemblies);
+        // services.AddServiced(assemblies);
+        // services.AddAutoMapper(assemblies);
     }
     public static void RegisterServices(IServiceCollection services, IConfiguration configuration)
     {

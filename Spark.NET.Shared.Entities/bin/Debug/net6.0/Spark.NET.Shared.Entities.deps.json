@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "Spark.NET.Shared.Entities/1.0.0": {
+        "runtime": {
+          "Spark.NET.Shared.Entities.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Spark.NET.Shared.Entities/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
