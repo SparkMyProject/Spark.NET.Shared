@@ -31,7 +31,7 @@ public class ServiceStartup
 
     public static void ConfigureSettings(IServiceCollection services)
     {
-        InitializeAppSettings.RegisterService(services, _configuration);
+        InitializeAppSettingsService.RegisterService(services, _configuration);
         services.Configure<ConnectionStringsSettings>(_configuration.GetSection("ConnectionStrings"));
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Spark.NET.Infrastructure.Services.AppSettings;
 
-public class InitializeAppSettings
+public class InitializeAppSettingsService
 {
     public static void RegisterService(IServiceCollection services, IConfiguration configuration)
     {
