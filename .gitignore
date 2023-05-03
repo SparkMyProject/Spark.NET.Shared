@@ -1,1 +1,8 @@
 ﻿/.idea
+/Spark.NET.Shared.Entities/.idea
+/Spark.NET.Shared.Entities/bin
+/Spark.NET.Shared.Entities/obj
+
+/Spark.NET.Shared.Infrastructure/.idea
+/Spark.NET.Shared.Infrastructure/bin
+/Spark.NET.Shared.Infrastructure/obj
