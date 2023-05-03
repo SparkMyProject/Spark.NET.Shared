@@ -1,9 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Spark.NET.Infrastructure.AppSettings.Models;
-using Spark.NET.Infrastructure.Services;
 
-namespace Spark.NET.Infrastructure;
+namespace Spark.NET.Infrastructure.Services;
 
 public class InfrastructureInstance
 {
