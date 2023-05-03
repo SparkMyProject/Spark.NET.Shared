@@ -2,6 +2,7 @@ using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Spark.NET.Infrastructure.AppSettings.Models;
+using Spark.NET.Infrastructure.Services.API;
 using Spark.NET.Infrastructure.Services.AppSettings;
 
 namespace Spark.NET.Infrastructure.Services;
@@ -27,6 +28,7 @@ public class ServiceStartup
     {
         // Add all of your services here
         Authentication.InitializeJwtService.RegisterService(services, _configuration);
+        API.InitializeApiEndpointsService.RegisterService(services, _configuration);
         API.InitializeSwaggerService.RegisterService(services, _configuration);
     }
 
