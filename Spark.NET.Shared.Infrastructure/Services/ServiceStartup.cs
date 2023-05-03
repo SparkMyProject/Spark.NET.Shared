@@ -27,6 +27,7 @@ public class ServiceStartup
     {
         // Add all of your services here
         Authentication.InitializeJwtService.RegisterService(services, _configuration);
+        API.InitializeSwaggerService.RegisterService(services, _configuration);
     }
 
     public static void ConfigureSettings(IServiceCollection services)
