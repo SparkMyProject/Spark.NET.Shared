@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Spark.NET.Infrastructure.Services;
+namespace Spark.NET.Infrastructure.Services.AppSettings;
 
 public class InitializeAppSettings
 {
