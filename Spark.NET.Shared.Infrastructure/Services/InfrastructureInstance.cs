@@ -22,9 +22,9 @@ public class InfrastructureInstance
         // Adds configuration file - MUST GO FIRST
         ServiceStartup.RegisterConfiguration(services, Env);
         // Configures the configuration file (adds it to the service, and objectifies it) - MUST GO SECOND.
-        ServiceStartup.ConfigureSettings(services, configuration);
+        ServiceStartup.ConfigureSettings(services);
         // Adds all services to the service collection
-        ServiceStartup.RegisterServices(services, configuration);
+        ServiceStartup.RegisterServices(services);
         services.AddSingleton<InfrastructureInstance>(this);
     }
 

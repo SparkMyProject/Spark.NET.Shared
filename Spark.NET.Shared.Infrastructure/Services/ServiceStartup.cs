@@ -23,13 +23,13 @@ public class ServiceStartup
         // services.AddServiced(assemblies);
         // services.AddAutoMapper(assemblies);
     }
-    public static void RegisterServices(IServiceCollection services, IConfiguration configuration)
+    public static void RegisterServices(IServiceCollection services)
     {
         // Add all of your services here
         Authentication.InitializeJwtService.RegisterService(services, _configuration);
     }
 
-    public static void ConfigureSettings(IServiceCollection services, IConfiguration configuration)
+    public static void ConfigureSettings(IServiceCollection services)
     {
         InitializeAppSettings.RegisterService(services, _configuration);
         services.Configure<ConnectionStringsSettings>(_configuration.GetSection("ConnectionStrings"));
