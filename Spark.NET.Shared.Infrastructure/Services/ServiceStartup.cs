@@ -26,6 +26,7 @@ public class ServiceStartup
     }
     public static void RegisterServices(IServiceCollection services)
     {
+        services.AddOptions();
         // Add all of your services here
         Authentication.InitializeJwtService.RegisterService(services, _configuration);
         API.InitializeApiEndpointsService.RegisterService(services, _configuration);
