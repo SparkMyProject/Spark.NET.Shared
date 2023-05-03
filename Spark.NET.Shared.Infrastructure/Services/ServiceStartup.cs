@@ -9,15 +9,16 @@ namespace Spark.NET.Infrastructure.Services;
 
 public class ServiceStartup
 {
-    private static IConfiguration _configuration;
+    private static IConfiguration? _configuration;
 
-    public static void RegisterConfiguration(IServiceCollection services, string environment)
+    public static IConfiguration RegisterConfiguration(IServiceCollection services, string environment, IConfiguration configuration = null!)
     {
-        _configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
+        _configuration = configuration ?? new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
             .AddEnvironmentVariables()
             .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(),$"../../Spark.NET.Shared/Spark.NET.Shared.Infrastructure/AppSettings/Configurations/appsettings.{environment}.json"), optional: false)
             .Build();
         Directory.GetCurrentDirectory();
+        return _configuration;
     }
     public static void RegisterServicesDiscovery(IServiceCollection services, params Assembly[] assemblies)
     {
