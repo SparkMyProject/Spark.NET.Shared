@@ -5,7 +5,7 @@ using Spark.NET.Shared.Entities.Models.User;
 
 namespace Spark.NET.Infrastructure.Contexts;
 
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
