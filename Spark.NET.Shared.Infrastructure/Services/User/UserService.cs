@@ -1,4 +1,6 @@
-﻿using Spark.NET.Infrastructure.Services.Authentication;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Spark.NET.Infrastructure.Services.Authentication;
 using Spark.NET.Shared.Entities.DTOs.API.Request.Authenticate;
 using Spark.NET.Shared.Entities.DTOs.API.Response.Authenticate;
 
@@ -13,6 +15,10 @@ public interface IUserService
 
 public class UserService : IUserService
 {
+    public static void RegisterService(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddScoped<IUserService, UserService>();
+    }
     // users hardcoded for simplicity, store in a db with hashed passwords in production applications
     private List<Shared.Entities.Models.User.User> _users = new List<Shared.Entities.Models.User.User>
     {
