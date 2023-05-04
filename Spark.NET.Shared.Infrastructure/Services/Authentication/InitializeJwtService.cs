@@ -28,6 +28,5 @@ public static class InitializeJwtService
             });
         // configure DI for application services
         services.AddScoped<IJwtUtils, JwtUtils>();
-        services.AddScoped<IUserService, UserService>();
     }
 }
