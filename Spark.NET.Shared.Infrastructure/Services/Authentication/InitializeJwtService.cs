@@ -8,7 +8,7 @@ namespace Spark.NET.Infrastructure.Services.Authentication;
 
 public static class InitializeJwtService
 {
-    public static void RegisterService(IServiceCollection services, IConfiguration? configuration)
+    public static void RegisterService(IServiceCollection services, IConfiguration configuration)
     {
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>

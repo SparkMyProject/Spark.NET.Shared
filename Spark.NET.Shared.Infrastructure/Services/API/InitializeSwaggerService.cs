@@ -5,7 +5,7 @@ namespace Spark.NET.Infrastructure.Services.API;
 
 public static class InitializeSwaggerService
 {
-    public static void RegisterService(IServiceCollection services, IConfiguration? configuration)
+    public static void RegisterService(IServiceCollection services, IConfiguration configuration)
     {
         services.AddSwaggerGen();
     }
