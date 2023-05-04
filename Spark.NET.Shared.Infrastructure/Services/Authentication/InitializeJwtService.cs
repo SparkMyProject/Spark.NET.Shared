@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Spark.NET.Infrastructure.Services.User;
 
 namespace Spark.NET.Infrastructure.Services.Authentication;
 
@@ -25,5 +26,8 @@ public static class InitializeJwtService
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("JWT_SECRET"))
                 };
             });
+        // configure DI for application services
+        services.AddScoped<IJwtUtils, JwtUtils>();
+        services.AddScoped<IUserService, UserService>();
     }
 }

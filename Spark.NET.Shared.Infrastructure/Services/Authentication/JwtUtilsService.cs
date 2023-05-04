@@ -10,7 +10,7 @@ namespace Spark.NET.Infrastructure.Services.Authentication;
 
 public interface IJwtUtils
 {
-    public string GenerateJwtToken(User user);
+    public string GenerateJwtToken(Shared.Entities.Models.User.User user);
     public int? ValidateJwtToken(string? token);
 }
 
@@ -26,7 +26,7 @@ public class JwtUtils : IJwtUtils
             throw new Exception("JWT secret not configured");
     }
 
-    public string GenerateJwtToken(User user)
+    public string GenerateJwtToken(Shared.Entities.Models.User.User user)
     {
         // generate token that is valid for 7 days
         var tokenHandler = new JwtSecurityTokenHandler();

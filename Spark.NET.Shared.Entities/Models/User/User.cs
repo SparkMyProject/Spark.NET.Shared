@@ -12,8 +12,8 @@ public class User
     [Required(ErrorMessage = "An Email is required.")]
     public string Email { get; set; } = "not@required.com";
 
-    [Required(ErrorMessage = "A UserName is required.")]
-    public string? UserName { get; set; }
+    [Required(ErrorMessage = "A Username is required.")]
+    public string? Username { get; set; }
 
     [Required(ErrorMessage = "A Password is required.")]
     public string? Password { get; set; }

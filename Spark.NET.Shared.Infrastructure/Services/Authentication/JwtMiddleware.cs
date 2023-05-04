@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http;
+using Spark.NET.Infrastructure.Services.User;
 
 namespace Spark.NET.Infrastructure.Services.Authentication;
 
