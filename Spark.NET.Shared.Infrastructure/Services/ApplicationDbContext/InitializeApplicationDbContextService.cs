@@ -8,9 +8,9 @@ public static class InitializeApplicationDbContextService
 {
     public static void RegisterService(IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        var connectionString = configuration.GetConnectionString("MySQLConnString");
         services.AddDbContext<Contexts.ApplicationDbContext>(options =>
-            options.UseNpgsql(connectionString));
+            options.UseMySql(connectionString, serverVersion: ServerVersion.AutoDetect(connectionString)));
         /*
          * If using SQL Server, replace use the following line instead:
          * - options.UseSqlServer(connectionString);
