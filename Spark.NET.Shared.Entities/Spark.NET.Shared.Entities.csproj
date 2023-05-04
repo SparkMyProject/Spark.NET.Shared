@@ -7,14 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="DTOs\API\Request\" />
-      <Folder Include="DTOs\API\Response\" />
+      <Folder Include="DTOs\API\Response\Authenticate\" />
       <Folder Include="Models\SomethingElse\" />
-      <Folder Include="Models\User\" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Colorful.Console" Version="1.2.15" />
+      <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.16" />
     </ItemGroup>
 
 </Project>
