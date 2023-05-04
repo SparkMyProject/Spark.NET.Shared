@@ -40,5 +40,6 @@ public class ServiceStartup
     {
         InitializeAppSettingsService.RegisterService(services, _configuration);
         services.Configure<ConnectionStringsSettings>(_configuration?.GetSection("ConnectionStrings"));
+        services.Configure<SecretKeysSettings>(_configuration?.GetSection("SecretKeys"));
     }
 }
