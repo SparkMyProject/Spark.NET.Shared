@@ -1,10 +1,9 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Spark.NET.Shared.Entities.Models.User;
 
-namespace Spark.NET.Infrastructure.Utils;
+namespace Spark.NET.Infrastructure.Utils.Attributes.Authentication;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class AuthorizeAttribute : Attribute, IAuthorizationFilter
