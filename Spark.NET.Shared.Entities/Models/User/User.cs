@@ -6,6 +6,7 @@ namespace Spark.NET.Shared.Entities.Models.User;
 
 public class User
 {
+    [Key] public int Id { get; set; }
     [Required] public DateTime CreatedAt = DateTime.Now;
 
     [Required(ErrorMessage = "An Email is required.")]
