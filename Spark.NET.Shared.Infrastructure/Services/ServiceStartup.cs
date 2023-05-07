@@ -1,6 +1,7 @@
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using Spark.NET.Infrastructure.AppSettings.Models;
 using Spark.NET.Infrastructure.Services.API;
 using Spark.NET.Infrastructure.Services.ApplicationDbContext;
@@ -13,6 +14,7 @@ namespace Spark.NET.Infrastructure.Services;
 public class ServiceStartup
 {
     private static IConfiguration _appSettingsConfiguration = null!;
+    private static ILogger _logger = null!;
 
     public static IConfiguration RegisterConfiguration(IServiceCollection services, string environment, IConfiguration appSettingsConfiguration = null!)
     {
@@ -45,5 +47,13 @@ public class ServiceStartup
         InitializeAppSettingsService.RegisterService(services, _appSettingsConfiguration);
         services.Configure<ConnectionStringsSettings>(_appSettingsConfiguration?.GetSection("ConnectionStrings"));
         services.Configure<SecretKeysSettings>(_appSettingsConfiguration?.GetSection("SecretKeys"));
+    }
+
+    public static ILogger ConfigureInfrastructureLogger()
+    {
+        var logger = new LoggerConfiguration()
+            .CreateLogger();
+        _logger = logger;
+        return logger;
     }
 }
