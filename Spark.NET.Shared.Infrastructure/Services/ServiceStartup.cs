@@ -5,7 +5,7 @@ using Spark.NET.Infrastructure.AppSettings.Models;
 using Spark.NET.Infrastructure.Services.API;
 using Spark.NET.Infrastructure.Services.ApplicationDbContext;
 using Spark.NET.Infrastructure.Services.AppSettings;
-using Spark.NET.Infrastructure.Services.Logger;
+// using Spark.NET.Infrastructure.Services.Logger;
 using Spark.NET.Infrastructure.Services.User;
 
 namespace Spark.NET.Infrastructure.Services;
@@ -37,7 +37,7 @@ public class ServiceStartup
         API.InitializeSwaggerService.RegisterService(services, _appSettingsConfiguration);
         InitializeApplicationDbContextService.RegisterService(services, _appSettingsConfiguration);
         UserService.RegisterService(services, _appSettingsConfiguration);
-        LoggerService.RegisterService(services, _appSettingsConfiguration);
+       // LoggerService.RegisterService(services, _appSettingsConfiguration);
     }
 
     public static void ConfigureSettings(IServiceCollection services)
