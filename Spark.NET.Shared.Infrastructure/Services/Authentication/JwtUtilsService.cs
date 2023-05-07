@@ -4,14 +4,13 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Spark.NET.Infrastructure.AppSettings.Models;
-using Spark.NET.Shared.Entities.Models.User;
 
 namespace Spark.NET.Infrastructure.Services.Authentication;
 
 public interface IJwtUtils
 {
     public string GenerateJwtToken(Shared.Entities.Models.User.User user);
-    public int? ValidateJwtToken(string? token);
+    public int?   ValidateJwtToken(string?                          token);
 }
 
 public class JwtUtils : IJwtUtils
@@ -58,7 +57,7 @@ public class JwtUtils : IJwtUtils
                 ValidateAudience = false,
                 // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
                 ClockSkew = TimeSpan.Zero
-            }, out SecurityToken validatedToken);
+            }, out var validatedToken);
 
             var jwtToken = (JwtSecurityToken)validatedToken;
             var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);

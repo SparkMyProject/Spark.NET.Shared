@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Spark.NET.Shared.Entities.Models.User;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Spark.NET.Infrastructure.Contexts;
 
@@ -11,8 +8,9 @@ public class ApplicationDbContext : DbContext
         : base(options)
     {
     }
-    protected override void OnModelCreating(ModelBuilder builder)  
-    {  
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
         base.OnModelCreating(builder);
-    }      
+    }
 }

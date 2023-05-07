@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using Spark.NET.Infrastructure.Services.Authentication;
+using Spark.NET.Infrastructure.Services.DI;
 using Spark.NET.Shared.Entities.DTOs.API.Request.Authenticate;
 using Spark.NET.Shared.Entities.DTOs.API.Response.Authenticate;
 
@@ -8,21 +10,25 @@ namespace Spark.NET.Infrastructure.Services.User;
 
 public interface IUserService
 {
-    LoginResModel? LoginResModel(LoginReqModel model);
+    LoginResModel?                                LoginResModel(LoginReqModel model);
     IEnumerable<Shared.Entities.Models.User.User> GetAll();
-    Shared.Entities.Models.User.User? GetById(int id);
+    Shared.Entities.Models.User.User?             GetById(int id);
 }
 
 public class UserService : IUserService
 {
     public static void RegisterService(IServiceCollection services, IConfiguration configuration)
+
     {
+        _appSettingsConfiguration = configuration;
         services.AddScoped<IUserService, UserService>();
     }
+
     // users hardcoded for simplicity, store in a db with hashed passwords in production applications
     private List<Shared.Entities.Models.User.User> _users = new List<Shared.Entities.Models.User.User>
     {
-        new Shared.Entities.Models.User.User { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
+        new Shared.Entities.Models.User.User
+            { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
     };
 
     private readonly IJwtUtils _jwtUtils;

@@ -7,6 +7,6 @@ public static class InitializeAppSettingsService
 {
     public static void RegisterService(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSingleton<IConfiguration>(configuration);
+        services.AddSingleton(configuration);
     }
 }

@@ -10,7 +10,7 @@ public static class InitializeApplicationDbContextService
     {
         var connectionString = configuration.GetConnectionString("MySQLConnString");
         services.AddDbContext<Contexts.ApplicationDbContext>(options =>
-            options.UseMySql(connectionString, serverVersion: ServerVersion.AutoDetect(connectionString)));
+                                                                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
         /*
          * If using SQL Server, replace use the following line instead:
          * - options.UseSqlServer(connectionString);
