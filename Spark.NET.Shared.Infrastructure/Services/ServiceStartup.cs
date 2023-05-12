@@ -15,22 +15,15 @@ namespace Spark.NET.Infrastructure.Services;
 
 public class ServiceStartup
 {
-    private static IConfiguration     _appSettingsConfiguration = null!;
-    private static ILogger            _logger                   = null!;
-    private static string             _environment              = null!;
-    private        IServiceCollection _services                 = null!;
-
-    public void Run(IServiceCollection services, string environment,
-                                  IConfiguration?   appSettingsConfiguration = null)
+    public void Run(IServiceCollection services, )
     {
-        _services = services;
         _environment = environment;
         // Setup AppSettings
         RegisterConfiguration(appSettingsConfiguration);
         // RegisterServicesDiscovery();
-        RegisterServices();
+        RegisterServices(infrastructureInstance.Services);
         ConfigureSettings();
-        ConfigureInfrastructureLogger();
+        ConfigureInfrastructureLogger(infrastructureInstance.Logger);
     }
 
     public static void RegisterConfiguration(IConfiguration? appSettingsConfiguration = null)
@@ -44,15 +37,15 @@ public class ServiceStartup
     //     // services.AddAutoMapper(assemblies);
     // }
 
-    public void RegisterServices()
+    public void RegisterServices(IServiceCollection services)
     {
-        _services.AddOptions();
+        services.AddOptions();
         // Add all of your services here
-        InitializeJwtService.RegisterService(_services, _appSettingsConfiguration);
-        InitializeApiEndpointsService.RegisterService(_services, _appSettingsConfiguration);
-        InitializeSwaggerService.RegisterService(_services, _appSettingsConfiguration);
-        InitializeApplicationDbContextService.RegisterService(_services, _appSettingsConfiguration);
-        UserService.RegisterService(_services, _appSettingsConfiguration, logger: _logger);
+        InitializeJwtService.RegisterService(services, _appSettingsConfiguration);
+        InitializeApiEndpointsService.RegisterService(services, _appSettingsConfiguration);
+        InitializeSwaggerService.RegisterService(services, _appSettingsConfiguration);
+        InitializeApplicationDbContextService.RegisterService(services, _appSettingsConfiguration);
+        UserService.RegisterService(services, _appSettingsConfiguration, logger: _logger);
         // LoggerService.RegisterService(services, _appSettingsConfiguration);
     }
 
@@ -63,9 +56,9 @@ public class ServiceStartup
         _services.Configure<SecretKeysSettings>(_appSettingsConfiguration?.GetSection("SecretKeys"));
     }
 
-    public void ConfigureInfrastructureLogger()
+    public void ConfigureInfrastructureLogger(ILogger? logger)
     {
-        _logger = new LoggerConfiguration()
+        _logger = logger ?? new LoggerConfiguration()
             .CreateLogger();
     }
 }
