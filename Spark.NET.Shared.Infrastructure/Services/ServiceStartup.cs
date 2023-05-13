@@ -15,20 +15,28 @@ namespace Spark.NET.Infrastructure.Services;
 
 public class ServiceStartup
 {
-    public void Run(IServiceCollection services, )
+    public readonly IServiceCollection Services;
+    public readonly string             Environment;
+    public readonly IConfiguration     AppSettingsConfiguration;
+    public readonly ILogger            Logger;
+
+    public ServiceStartup(IServiceCollection services, string environment, IConfiguration? appSettingsConfiguration = null, ILogger? logger = null)
     {
-        _environment = environment;
-        // Setup AppSettings
-        RegisterConfiguration(appSettingsConfiguration);
-        // RegisterServicesDiscovery();
-        RegisterServices(infrastructureInstance.Services);
+        Services = services;
+        Environment = environment;
+        AppSettingsConfiguration = RegisterConfiguration(appSettingsConfiguration);
+        Logger = ConfigureInfrastructureLogger(logger);
+
+        RegisterServices(Services);
         ConfigureSettings();
-        ConfigureInfrastructureLogger(infrastructureInstance.Logger);
     }
 
-    public static void RegisterConfiguration(IConfiguration? appSettingsConfiguration = null)
+    private IConfiguration RegisterConfiguration(IConfiguration? appSettingsConfiguration)
     {
-        _appSettingsConfiguration = appSettingsConfiguration ?? new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).Build();
+        return appSettingsConfiguration ?? new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
+     .AddEnvironmentVariables()
+     .AddJsonFile($"appsettings.{Environment}.json", optional: false)
+     .Build();
     }
     //
     // public static void RegisterServicesDiscovery(IServiceCollection services, params Assembly[] assemblies)
@@ -37,28 +45,28 @@ public class ServiceStartup
     //     // services.AddAutoMapper(assemblies);
     // }
 
-    public void RegisterServices(IServiceCollection services)
+    private void RegisterServices(IServiceCollection services)
     {
         services.AddOptions();
         // Add all of your services here
-        InitializeJwtService.RegisterService(services, _appSettingsConfiguration);
-        InitializeApiEndpointsService.RegisterService(services, _appSettingsConfiguration);
-        InitializeSwaggerService.RegisterService(services, _appSettingsConfiguration);
-        InitializeApplicationDbContextService.RegisterService(services, _appSettingsConfiguration);
-        UserService.RegisterService(services, _appSettingsConfiguration, logger: _logger);
+        InitializeJwtService.RegisterService(services, AppSettingsConfiguration);
+        InitializeApiEndpointsService.RegisterService(services, AppSettingsConfiguration);
+        InitializeSwaggerService.RegisterService(services, AppSettingsConfiguration);
+        InitializeApplicationDbContextService.RegisterService(services, AppSettingsConfiguration);
+        UserService.RegisterService(services, AppSettingsConfiguration, logger: this.Logger);
         // LoggerService.RegisterService(services, _appSettingsConfiguration);
     }
 
-    public void ConfigureSettings()
+    private void ConfigureSettings()
     {
-        InitializeAppSettingsService.RegisterService(_services, _appSettingsConfiguration);
-        _services.Configure<ConnectionStringsSettings>(_appSettingsConfiguration?.GetSection("ConnectionStrings"));
-        _services.Configure<SecretKeysSettings>(_appSettingsConfiguration?.GetSection("SecretKeys"));
+        InitializeAppSettingsService.RegisterService(Services, AppSettingsConfiguration);
+        Services.Configure<ConnectionStringsSettings>(AppSettingsConfiguration?.GetSection("ConnectionStrings"));
+        Services.Configure<SecretKeysSettings>(AppSettingsConfiguration?.GetSection("SecretKeys"));
     }
 
-    public void ConfigureInfrastructureLogger(ILogger? logger)
+    private ILogger ConfigureInfrastructureLogger(ILogger? logger)
     {
-        _logger = logger ?? new LoggerConfiguration()
-            .CreateLogger();
+        return logger ?? new LoggerConfiguration().ReadFrom.Configuration(AppSettingsConfiguration).Enrich.FromLogContext().WriteTo.Console().CreateLogger();
+                   .CreateLogger();
     }
 }
