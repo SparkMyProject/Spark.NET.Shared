@@ -13,30 +13,31 @@ using Spark.NET.Infrastructure.Services.User;
 
 namespace Spark.NET.Infrastructure.Services;
 
-public class ServiceStartup
+public class InfrastructureInstance
 {
     public readonly IServiceCollection Services;
     public readonly string             Environment;
     public readonly IConfiguration     AppSettingsConfiguration;
-    public readonly ILogger            Logger;
+    public readonly ILogger            Logger; // This is the InfrastructureLogger
 
-    public ServiceStartup(IServiceCollection services, string environment, IConfiguration? appSettingsConfiguration = null, ILogger? logger = null)
+    public InfrastructureInstance(IServiceCollection services, string environment, IConfiguration? appSettingsConfiguration = null,
+                                  ILogger?           logger = null)
     {
         Services = services;
         Environment = environment;
         AppSettingsConfiguration = RegisterConfiguration(appSettingsConfiguration);
-        Logger = ConfigureInfrastructureLogger(logger);
+        ConfigureSettings();
+        Logger = ConfigureInfrastructureLogger(logger); // You may use the same logger as the API, or a different one. Just pass logger through.
 
         RegisterServices(Services);
-        ConfigureSettings();
     }
 
     private IConfiguration RegisterConfiguration(IConfiguration? appSettingsConfiguration)
     {
         return appSettingsConfiguration ?? new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
-     .AddEnvironmentVariables()
-     .AddJsonFile($"appsettings.{Environment}.json", optional: false)
-     .Build();
+                                                                     .AddEnvironmentVariables()
+                                                                     .AddJsonFile($"appsettings.{Environment}.json", optional: false)
+                                                                     .Build();
     }
     //
     // public static void RegisterServicesDiscovery(IServiceCollection services, params Assembly[] assemblies)
@@ -53,7 +54,7 @@ public class ServiceStartup
         InitializeApiEndpointsService.RegisterService(services, AppSettingsConfiguration);
         InitializeSwaggerService.RegisterService(services, AppSettingsConfiguration);
         InitializeApplicationDbContextService.RegisterService(services, AppSettingsConfiguration);
-        UserService.RegisterService(services, AppSettingsConfiguration, logger: this.Logger);
+        UserService.RegisterService(services, AppSettingsConfiguration, logger: Logger);
         // LoggerService.RegisterService(services, _appSettingsConfiguration);
     }
 
@@ -66,7 +67,6 @@ public class ServiceStartup
 
     private ILogger ConfigureInfrastructureLogger(ILogger? logger)
     {
-        return logger ?? new LoggerConfiguration().ReadFrom.Configuration(AppSettingsConfiguration).Enrich.FromLogContext().WriteTo.Console().CreateLogger();
-                   .CreateLogger();
+        return logger ?? new LoggerConfiguration().WriteTo.Console().WriteTo.Seq("http://localhost:5341").CreateLogger();
     }
 }
