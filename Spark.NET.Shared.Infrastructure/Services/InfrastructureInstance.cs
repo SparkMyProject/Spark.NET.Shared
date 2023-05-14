@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Spark.NET.Infrastructure.AppSettings.Models;
+using Spark.NET.Infrastructure.Contexts;
 using Spark.NET.Infrastructure.Services.API;
 using Spark.NET.Infrastructure.Services.ApplicationDbContext;
 using Spark.NET.Infrastructure.Services.AppSettings;
@@ -50,12 +51,10 @@ public class InfrastructureInstance
     {
         services.AddOptions();
         // Add all of your services here
-        InitializeJwtService.RegisterService(services, AppSettingsConfiguration);
-        InitializeApiEndpointsService.RegisterService(services, AppSettingsConfiguration);
-        InitializeSwaggerService.RegisterService(services, AppSettingsConfiguration);
-        InitializeApplicationDbContextService.RegisterService(services, AppSettingsConfiguration);
-        UserService.RegisterService(services, AppSettingsConfiguration, logger: Logger);
-        // LoggerService.RegisterService(services, _appSettingsConfiguration);
+        JwtService.RegisterService(services, AppSettingsConfiguration);
+        ApplicationDbContext.RegisterService(services, AppSettingsConfiguration);
+        ApiServices.RegisterService(services);
+        UserService.RegisterService(services);
     }
 
     private void ConfigureSettings()

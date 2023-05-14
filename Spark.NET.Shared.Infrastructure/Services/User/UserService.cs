@@ -16,8 +16,8 @@ public interface IUserService
 
 public class UserService : IUserService
 {
-    private static IConfiguration _appSettingsConfiguration = null!;
-    private static ILogger        _logger                   = null!;
+    private IConfiguration _appSettingsConfiguration;
+    private ILogger        _logger;
 
     private readonly IJwtUtils _jwtUtils;
 
@@ -27,8 +27,10 @@ public class UserService : IUserService
         new() { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
     };
 
-    public UserService(IJwtUtils jwtUtils)
+    public UserService(IJwtUtils jwtUtils, ILogger logger, IConfiguration appSettingsConfiguration)
     {
+        _logger = logger;
+        _appSettingsConfiguration = appSettingsConfiguration;
         _jwtUtils = jwtUtils;
     }
 
@@ -55,11 +57,8 @@ public class UserService : IUserService
         return _users.FirstOrDefault(x => x.Id == id);
     }
 
-    public static void RegisterService(IServiceCollection services, IConfiguration configuration,
-                                       ILogger            logger)
+    public static void RegisterService(IServiceCollection services)
     {
-        _appSettingsConfiguration = configuration;
-        _logger = logger;
         services.AddScoped<IUserService, UserService>();
     }
 }
