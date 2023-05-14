@@ -36,7 +36,7 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
         </Content>
-        <Content Include="AppSettings\Configurations\appsettings.json">
+        <Content Include="AppSettings\Configurations\appsettings.global.json">
             <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

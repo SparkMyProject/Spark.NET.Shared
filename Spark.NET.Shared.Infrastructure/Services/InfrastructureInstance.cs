@@ -27,6 +27,7 @@ public class InfrastructureInstance
         Configuration = RegisterConfiguration(appSettingsConfiguration);
         ConfigureSettings();
         Logger = ConfigureInfrastructureLogger(logger); // You may use the same logger as the API, or a different one. Just pass logger through.
+        Logger.Information("InfrastructureInstance created");
 
         RegisterServices();
     }
@@ -38,6 +39,8 @@ public class InfrastructureInstance
         return appSettingsConfiguration ?? new ConfigurationBuilder()
                                                                      .AddEnvironmentVariables()
                                                                      .AddJsonFile(Path.Join(x, $"./AppSettings/Configurations/appsettings.{Env}.json"),
+                                                                                  optional: false)
+                                                                     .AddJsonFile(Path.Join(x, $"./AppSettings/Configurations/appsettings.global.json"),
                                                                                   optional: false)
                                                                      .Build();
     }
