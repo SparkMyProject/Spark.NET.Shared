@@ -62,6 +62,7 @@ public class InfrastructureInstance
 
     private void ConfigureSettings()
     {
+        
         InitializeAppSettingsService.RegisterService(Services, Configuration);
         Services.Configure<ConnectionStringsSettings>(Configuration?.GetSection("ConnectionStrings"));
         Services.Configure<SecretKeysSettings>(Configuration?.GetSection("SecretKeys"));
@@ -69,6 +70,9 @@ public class InfrastructureInstance
 
     private ILogger ConfigureInfrastructureLogger(ILogger? logger)
     {
-        return logger ?? new LoggerConfiguration().WriteTo.Console().WriteTo.Seq("http://localhost:5341").CreateLogger();
+        var seqKeys = Configuration.GetSection("SecretKeys").GetSection("SeqLoggingSecretKeys").Get<SeqLoggingSecretKeys>();
+        var projectName = Configuration.GetSection("ProjectName").Value;
+
+        return logger ?? new LoggerConfiguration().WriteTo.Console().WriteTo.Seq("http://localhost:5341", apiKey: seqKeys?.SeqLoggingSecretInfrastructure).Enrich.WithProperty("Project", $"{projectName}.Infrastructure").CreateLogger();
     }
 }
