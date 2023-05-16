@@ -1,6 +1,8 @@
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Sentry.Serilog;
 using Serilog;
 using Spark.NET.Infrastructure.AppSettings.Models;
 using Spark.NET.Infrastructure.Contexts;
@@ -28,6 +30,7 @@ public class InfrastructureInstance
         ConfigureSettings();
         Logger = ConfigureInfrastructureLogger(logger); // You may use the same logger as the API, or a different one. Just pass logger through.
         Logger.Information("InfrastructureInstance created");
+        throw null;
 
         RegisterServices();
     }
@@ -35,14 +38,14 @@ public class InfrastructureInstance
     private IConfiguration RegisterConfiguration(IConfiguration? appSettingsConfiguration)
     {
         var x = AppDomain.CurrentDomain.BaseDirectory;
-        
+
         return appSettingsConfiguration ?? new ConfigurationBuilder()
-                                                                     .AddEnvironmentVariables()
-                                                                     .AddJsonFile(Path.Join(x, $"./AppSettings/Configurations/appsettings.{Env}.json"),
-                                                                                  optional: false)
-                                                                     .AddJsonFile(Path.Join(x, $"./AppSettings/Configurations/appsettings.global.json"),
-                                                                                  optional: false)
-                                                                     .Build();
+                                           .AddEnvironmentVariables()
+                                           .AddJsonFile(Path.Join(x, $"./AppSettings/Configurations/appsettings.{Env}.json"),
+                                                        optional: false)
+                                           .AddJsonFile(Path.Join(x, $"./AppSettings/Configurations/appsettings.global.json"),
+                                                        optional: false)
+                                           .Build();
     }
     //
     // public static void RegisterServicesDiscovery(IServiceCollection services, params Assembly[] assemblies)
@@ -62,17 +65,25 @@ public class InfrastructureInstance
 
     private void ConfigureSettings()
     {
-        
         InitializeAppSettingsService.RegisterService(Services, Configuration);
-        Services.Configure<ConnectionStringsSettings>(Configuration?.GetSection("ConnectionStrings"));
-        Services.Configure<SecretKeysSettings>(Configuration?.GetSection("SecretKeys"));
+        Services.Configure<Infrastructure.AppSettings.Models.AppSettings>(Configuration);
     }
 
     private ILogger ConfigureInfrastructureLogger(ILogger? logger)
     {
-        var seqKeys = Configuration.GetSection("SecretKeys").GetSection("SeqLoggingSecretKeys").Get<SeqLoggingSecretKeys>();
-        var projectName = Configuration.GetSection("ProjectName").Value;
+        var config = Configuration.Get<Infrastructure.AppSettings.Models.AppSettings>();
+        var sentryConfig = new ConfigureOptions<SentrySerilogOptions>(x =>
+        {
+            x.Dsn = config?.SecretKeys.SentryDSN;
+            x.Debug = Env == "Development"; // If Env == Development, then enable Debug mode
+            x.AutoSessionTracking = true;
+            x.EnableTracing = true;
+        });
 
-        return logger ?? new LoggerConfiguration().WriteTo.Console().WriteTo.Seq("http://localhost:5341", apiKey: seqKeys?.SeqLoggingSecretInfrastructure).Enrich.WithProperty("Project", $"{projectName}.Infrastructure").CreateLogger();
+        return logger ?? new LoggerConfiguration().WriteTo.Console().WriteTo
+                                                  .Seq("http://localhost:5341", apiKey: config?.SecretKeys.SeqLoggingSecretKeys.SeqLoggingSecretInfrastructure).Enrich
+                                                  .WithProperty("Project", $"{config?.ProjectName}.Infrastructure")
+                                                  .WriteTo.Sentry(x => sentryConfig.Configure(x))
+                                                  .CreateLogger();
     }
 }
