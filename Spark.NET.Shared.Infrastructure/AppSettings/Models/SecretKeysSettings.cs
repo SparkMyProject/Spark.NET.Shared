@@ -3,9 +3,10 @@
 public class SecretKeysSettings
 {
     public string JwtSecret { get; set; }
+    public SeqLoggingSecretKeys SeqLoggingSecretKeys { get; set; }
 }
 
-class SeqLoggingSecretKeys
+public class SeqLoggingSecretKeys
 {
     public string SeqLoggingSecretAPI { get; set; }
     public string SeqLoggingSecretInfrastructure { get; set; }
