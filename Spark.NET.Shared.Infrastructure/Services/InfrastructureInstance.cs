@@ -72,18 +72,19 @@ public class InfrastructureInstance
     private ILogger ConfigureInfrastructureLogger(ILogger? logger)
     {
         var config = Configuration.Get<Infrastructure.AppSettings.Models.AppSettings>();
-        var sentryConfig = new ConfigureOptions<SentrySerilogOptions>(x =>
-        {
-            x.Dsn = config?.SecretKeys.SentryDSN;
-            x.Debug = Env == "Development"; // If Env == Development, then enable Debug mode
-            x.AutoSessionTracking = true;
-            x.EnableTracing = true;
-        });
 
         return logger ?? new LoggerConfiguration().WriteTo.Console().WriteTo
-                                                  .Seq("http://localhost:5341", apiKey: config?.SecretKeys.SeqLoggingSecretKeys.SeqLoggingSecretInfrastructure).Enrich
-                                                  .WithProperty("Project", $"{config?.ProjectName}.Infrastructure")
-                                                  .WriteTo.Sentry(x => sentryConfig.Configure(x))
+                                                  .Seq("http://localhost:5341",
+                                                       apiKey: config?.SecretKeys.SeqLoggingSecretKeys.SeqLoggingSecretInfrastructure)
+                                                  .Enrich.WithProperty("Environment", Env)
+                                                  .Enrich.WithProperty("Project", $"{config?.ProjectName}.Infrastructure")
+                                                  .WriteTo.Sentry(x =>
+                                                  {
+                                                      x.Dsn = config?.SecretKeys.SentryDSN;
+                                                      x.Debug = Env == "Development"; // If Env == Development, then enable Debug mode
+                                                      x.AutoSessionTracking = true;
+                                                      x.EnableTracing = true;
+                                                  })
                                                   .CreateLogger();
     }
 }
