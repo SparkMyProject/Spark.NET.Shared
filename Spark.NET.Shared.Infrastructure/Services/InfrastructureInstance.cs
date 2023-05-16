@@ -30,7 +30,6 @@ public class InfrastructureInstance
         ConfigureSettings();
         Logger = ConfigureInfrastructureLogger(logger); // You may use the same logger as the API, or a different one. Just pass logger through.
         Logger.Information("InfrastructureInstance created");
-        throw null;
 
         RegisterServices();
     }
@@ -85,6 +84,7 @@ public class InfrastructureInstance
                                                       x.AutoSessionTracking = true;
                                                       x.EnableTracing = true;
                                                   })
+                                                  .WriteTo.DatadogLogs(config?.SecretKeys.DataDogApiKey)
                                                   .CreateLogger();
     }
 }
