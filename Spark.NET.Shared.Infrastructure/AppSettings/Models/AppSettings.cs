@@ -19,10 +19,13 @@ public class SecretKeysSettings
     public string               JwtSecret            { get; set; }
     public SeqLoggingSecretKeys SeqLoggingSecretKeys { get; set; }
     public string               SentryDSN            { get; set; }
+    public string               DataDogApiKey       { get; set; }
+
 }
 
 public class SeqLoggingSecretKeys
 {
     public string SeqLoggingSecretAPI            { get; set; }
     public string SeqLoggingSecretInfrastructure { get; set; }
+    
 }
