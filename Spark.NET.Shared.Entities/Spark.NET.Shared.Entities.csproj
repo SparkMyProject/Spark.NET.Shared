@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="DTOs\API\Response\Authenticate\"/>
         <Folder Include="Models\SomethingElse\"/>
     </ItemGroup>
 

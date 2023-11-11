@@ -8,7 +8,7 @@ namespace Spark.NET.Infrastructure.Services.Authentication;
 
 public static class JwtService
 {
-    public static void RegisterService(IServiceCollection services, IConfiguration configuration)
+    public static void RegisterService(IServiceCollection services, IConfiguration configuration, Infrastructure.AppSettings.Models.AppSettings appSettings)
     {
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -16,16 +16,15 @@ public static class JwtService
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ClockSkew = TimeSpan.Zero,
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = "apiWithAuthBackend",
                         ValidAudience = "apiWithAuthBackend",
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("JWT_SECRET"))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.SecretKeys.JwtSecret))
                     };
                 });
         // configure DI for application services
-        services.AddScoped<IJwtUtils, JwtUtils>();
     }
 }
