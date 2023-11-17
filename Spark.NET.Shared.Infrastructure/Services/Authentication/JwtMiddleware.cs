@@ -19,7 +19,8 @@ public class JwtMiddleware
 
     public async Task Invoke(HttpContext context, IUserService userService)
     {
-        var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+        var token = context.Request.Headers.Authorization.FirstOrDefault()?.Split(" ").Last();
+       // var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
         if (token != null)
             attachUserToContext(context, userService, token);
@@ -51,6 +52,7 @@ public class JwtMiddleware
         }
         catch
         {
+            Console.WriteLine("JwtMiddleware.cs: JwtMiddleware.attachUserToContext(): Jwt validation failed");
             // do nothing if jwt validation fails
             // user is not attached to context so request won't have access to secure routes
         }

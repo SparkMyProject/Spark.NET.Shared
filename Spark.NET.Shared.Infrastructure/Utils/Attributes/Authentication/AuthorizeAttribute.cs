@@ -10,7 +10,7 @@ public class AuthorizeAttribute : Attribute, IAuthorizationFilter
 {
     public void OnAuthorization(AuthorizationFilterContext context)
     {
-        var user = (ApplicationUser)context.HttpContext.Items["User"]!;
+        var user = context.HttpContext.Items["User"] as ApplicationUser;
         if (user == null)
         {
             // not logged in
