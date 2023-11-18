@@ -76,9 +76,4 @@ public class UserService : IUserService
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
     }
-    
-    public static void RegisterService(IServiceCollection services)
-    {
-        services.AddScoped<IUserService, UserService>();
-    }
 }

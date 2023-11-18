@@ -6,7 +6,6 @@ using Sentry.Serilog;
 using Serilog;
 using Spark.NET.Infrastructure.AppSettings.Models;
 using Spark.NET.Infrastructure.Contexts;
-using Spark.NET.Infrastructure.Services.AppSettings;
 using Spark.NET.Infrastructure.Services.Authentication;
 
 // using Spark.NET.Infrastructure.Services.Logger;
@@ -27,18 +26,16 @@ public class InfrastructureInstance
         Services = services;
         Env = environment;
         Configuration = RegisterConfiguration(appSettingsConfiguration);
-        ConfigureSettings();
         Logger = ConfigureInfrastructureLogger(logger); // You may use the same logger as the API, or a different one. Just pass logger through.
         AppSettings = Configuration.Get<Infrastructure.AppSettings.Models.AppSettings>();
         Logger.Information("InfrastructureInstance created");
         RegisterServices();
-        
     }
 
     private IConfiguration RegisterConfiguration(IConfiguration? appSettingsConfiguration)
     {
         var x = AppDomain.CurrentDomain.BaseDirectory;
-        
+
 
         return appSettingsConfiguration ?? new ConfigurationBuilder()
             .AddEnvironmentVariables()
@@ -61,18 +58,14 @@ public class InfrastructureInstance
         Services.AddRazorPages();
 
         // Add all of your services here
+        Services.Configure<Infrastructure.AppSettings.Models.AppSettings>(Configuration);
+        Services.AddScoped<IUserService, UserService>();
+
         JwtService.RegisterService(Services, Configuration, AppSettings);
         ApplicationDbContext.RegisterService(Services, Configuration);
-        UserService.RegisterService(Services);
-        
-        
-        // configure DI for application services
-    }
 
-    private void ConfigureSettings()
-    {
-        InitializeAppSettingsService.RegisterService(Services, Configuration);
-        Services.Configure<Infrastructure.AppSettings.Models.AppSettings>(Configuration);
+
+        // configure DI for application services
     }
 
     private ILogger ConfigureInfrastructureLogger(ILogger? logger)
@@ -94,5 +87,4 @@ public class InfrastructureInstance
             //.WriteTo.DatadogLogs(config?.SecretKeys.DataDogApiKey)
             .CreateLogger();
     }
-    
 }
