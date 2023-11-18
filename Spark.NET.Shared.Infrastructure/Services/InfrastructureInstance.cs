@@ -66,7 +66,6 @@ public class InfrastructureInstance
         Services.Configure<Infrastructure.AppSettings.Models.AppSettings>(Configuration);
         Services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
-        Services.AddDbContext<ApplicationDbContext>();
         Services.AddScoped<UserManager<ApplicationUser>>();
         Services.AddScoped<IUserService, UserService>();
 

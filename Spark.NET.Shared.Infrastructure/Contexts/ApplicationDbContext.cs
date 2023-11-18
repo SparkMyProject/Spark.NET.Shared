@@ -17,11 +17,14 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     {
         base.OnModelCreating(builder);
     }
+
     public static void RegisterService(IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("MySQLConnString");
-        services.AddDbContext<Contexts.ApplicationDbContext>(options =>
-                                                                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+        var connectionString = configuration.GetConnectionString("SQLiteConnString");
+        // MySQL Setup
+        // services.AddDbContext<Contexts.ApplicationDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+        // SQite Setup
+        services.AddDbContext<Contexts.ApplicationDbContext>(options => options.UseSqlite(connectionString));
         /*
          * If using SQL Server, replace use the following line instead:
          * - options.UseSqlServer(connectionString);
@@ -31,6 +34,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
          * - options.UseSqlite(connectionString);
          * If using PostgreSQL, replace use the following line instead:
          * - options.UseNpgsql(connectionString);
-        */
+         */
     }
 }
