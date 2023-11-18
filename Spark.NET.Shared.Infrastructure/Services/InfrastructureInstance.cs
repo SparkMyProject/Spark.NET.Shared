@@ -60,8 +60,10 @@ public class InfrastructureInstance
         // Add all of your services here
         Services.Configure<Infrastructure.AppSettings.Models.AppSettings>(Configuration);
         Services.AddScoped<IUserService, UserService>();
+        
+        // The services below do not use DI, so they are not registered as scoped services.
 
-        JwtService.RegisterService(Services, Configuration, AppSettings);
+        AddAuthenticationService.RegisterService(Services, Configuration, AppSettings);
         ApplicationDbContext.RegisterService(Services, Configuration);
 
 
