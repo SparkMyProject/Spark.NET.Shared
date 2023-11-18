@@ -8,56 +8,70 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Spark.NET.Infrastructure.Contexts;
 using Spark.NET.Infrastructure.Services.Authentication;
 using Spark.NET.Shared.Entities.Models.User;
 
 
 public interface IUserService
 {
-    AuthenticateResponse Authenticate(AuthenticateRequest model);
-    IEnumerable<ApplicationUser> GetAll();
-    ApplicationUser GetById(int id);
+    Task<AuthenticateResponse> Authenticate(AuthenticateRequest model);
+    Task<ApplicationUser> GetById(string id);
+    Task<AuthenticateResponse> Register(RegisterRequest model);
 }
 
 public class UserService : IUserService
 {
-    // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-    private List<ApplicationUser> _users = new List<ApplicationUser>
-    {
-        new ApplicationUser { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
-    };
 
     private readonly AppSettings _appSettings;
+    private readonly ApplicationDbContext _context;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public UserService(IOptions<AppSettings> appSettings)
+    public UserService(IOptions<AppSettings> appSettings, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
     {
         _appSettings = appSettings.Value;
+        _context = context;
+        _userManager = userManager;
     }
 
-    public AuthenticateResponse Authenticate(AuthenticateRequest model)
+    public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest model)
     {
-        var user = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+        var user = await _userManager.FindByNameAsync(model.UserName);
 
         // return null if user not found
         if (user == null) return null;
-
+        if (!await _userManager.CheckPasswordAsync(user, model.Password)) return null;
         // authentication successful so generate jwt token
         var token = generateJwtToken(user);
         
 
         return new AuthenticateResponse(user, token);
-    }
 
-    public IEnumerable<ApplicationUser> GetAll()
-    {
-        return _users;
     }
-
-    public ApplicationUser GetById(int id)
+    
+    public async Task<AuthenticateResponse> Register(RegisterRequest model)
     {
-        return _users.FirstOrDefault(x => x.Id == id);
+        var user = new ApplicationUser
+        {
+            UserName = model.UserName,
+        };
+        var result = await _userManager.CreateAsync(user, model.Password);
+        if (result.Succeeded)
+        {
+            var token = generateJwtToken(user);
+            return new AuthenticateResponse(user, token);
+        }
+
+        return null;
+    }
+    
+
+    public async Task<ApplicationUser> GetById(string id)
+    {
+        return await _userManager.FindByIdAsync(id);
     }
 
     // helper methods

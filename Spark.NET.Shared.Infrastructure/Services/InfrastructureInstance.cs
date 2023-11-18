@@ -1,4 +1,7 @@
 using System.Reflection;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -7,6 +10,7 @@ using Serilog;
 using Spark.NET.Infrastructure.AppSettings.Models;
 using Spark.NET.Infrastructure.Contexts;
 using Spark.NET.Infrastructure.Services.Authentication;
+using Spark.NET.Shared.Entities.Models.User;
 
 // using Spark.NET.Infrastructure.Services.Logger;
 
@@ -57,14 +61,19 @@ public class InfrastructureInstance
         Services.AddOptions();
         Services.AddRazorPages();
 
+
         // Add all of your services here
         Services.Configure<Infrastructure.AppSettings.Models.AppSettings>(Configuration);
-        Services.AddScoped<IUserService, UserService>();
-        
-        // The services below do not use DI, so they are not registered as scoped services.
+        Services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
-        AddAuthenticationService.RegisterService(Services, Configuration, AppSettings);
+        Services.AddDbContext<ApplicationDbContext>();
+        Services.AddScoped<UserManager<ApplicationUser>>();
+        Services.AddScoped<IUserService, UserService>();
+
+
+        // The services below do not use DI, so they are not registered as scoped services.
         ApplicationDbContext.RegisterService(Services, Configuration);
+        AddAuthenticationService.RegisterService(Services, Configuration, AppSettings);
 
 
         // configure DI for application services

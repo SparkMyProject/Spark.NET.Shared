@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Spark.NET.Shared.Entities.Models.User;
 
 namespace Spark.NET.Infrastructure.Contexts;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
