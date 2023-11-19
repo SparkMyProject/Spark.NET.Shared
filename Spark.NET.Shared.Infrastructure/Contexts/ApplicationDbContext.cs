@@ -32,7 +32,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
             options.UseSqlite(connectionString);
         }, optionsLifetime: ServiceLifetime.Singleton, contextLifetime: ServiceLifetime.Scoped);
         
-        /* test
+        /*
          * If using SQL Server, replace use the following line instead:
          * - options.UseSqlServer(connectionString);
          * If using MySQL/MariaDB, replace use the following line instead:
