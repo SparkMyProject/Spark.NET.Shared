@@ -8,9 +8,14 @@ namespace Spark.NET.Infrastructure.Contexts;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
 {
+    public ApplicationDbContext()
+    {
+        
+    }
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
+        
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -21,11 +26,13 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public static void RegisterService(IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("SQLiteConnString");
-        // MySQL Setup
-        // services.AddDbContext<Contexts.ApplicationDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
-        // SQite Setup
-        services.AddDbContext<Contexts.ApplicationDbContext>(options => options.UseSqlite(connectionString));
-        /*
+
+        services.AddDbContext<ApplicationDbContext>(options =>
+        {
+            options.UseSqlite(connectionString);
+        }, optionsLifetime: ServiceLifetime.Singleton, contextLifetime: ServiceLifetime.Scoped);
+        
+        /* test
          * If using SQL Server, replace use the following line instead:
          * - options.UseSqlServer(connectionString);
          * If using MySQL/MariaDB, replace use the following line instead:
