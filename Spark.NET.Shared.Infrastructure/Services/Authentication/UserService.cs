@@ -6,6 +6,7 @@ using Spark.NET.Shared.Entities.DTOs.API.Authentication;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Spark.NET.Infrastructure.Contexts;
 using Spark.NET.Infrastructure.Services.Authentication;
+using Spark.NET.Shared.Entities.DTOs.API;
 using Spark.NET.Shared.Entities.Models.User;
 
 
@@ -20,7 +22,7 @@ public interface IUserService
 {
     Task<AuthenticateResponse> Authenticate(AuthenticateRequest model);
     Task<ApplicationUser> GetById(string id);
-    Task<AuthenticateResponse> Register(RegisterRequest model);
+    Task<ServiceResponse> Register(RegisterRequest model);
 }
 
 public class UserService : IUserService
@@ -52,7 +54,7 @@ public class UserService : IUserService
 
     }
     
-    public async Task<AuthenticateResponse> Register(RegisterRequest model)
+    public async Task<ServiceResponse> Register(RegisterRequest model)
     {
         var user = new ApplicationUser
         {
@@ -62,10 +64,13 @@ public class UserService : IUserService
         if (result.Succeeded)
         {
             var token = generateJwtToken(user);
-            return new AuthenticateResponse(user, token);
+            
+            return new ServiceResponse(new {token});
         }
-
-        return null;
+        else
+        {
+            return new ServiceResponse(ApiErrorMessages.GenericError, true, result);
+        };
     }
     
 
