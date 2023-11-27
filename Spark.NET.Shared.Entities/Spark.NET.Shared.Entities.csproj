@@ -12,6 +12,7 @@
 
     <ItemGroup>
         <PackageReference Include="Colorful.Console" Version="1.2.15"/>
+        <PackageReference Include="Microsoft.AspNetCore.Cryptography.Internal" Version="8.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
