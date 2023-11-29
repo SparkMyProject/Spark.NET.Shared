@@ -58,7 +58,9 @@ public class UserService : IUserService
     {
         var user = new ApplicationUser
         {
-            UserName = model.UserName,
+            UserName =  model.UserName,
+            Id = Guid.NewGuid().ToString()
+            
         };
         var result = await _userManager.CreateAsync(user, model.Password);
         if (result.Succeeded)

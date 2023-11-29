@@ -5,7 +5,7 @@ namespace Spark.NET.Shared.Entities.DTOs.API.Authentication;
 
 public class AuthenticateResponse
 {
-    public int Id { get; set; }
+    public String Id { get; set; }
     public int HttpCode { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
