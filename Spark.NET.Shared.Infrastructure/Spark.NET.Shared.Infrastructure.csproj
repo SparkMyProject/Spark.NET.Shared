@@ -40,12 +40,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="AppSettings\Configurations\appsettings.Development.json">
+        <Content Include="AppSettings\Configurations\appsettings.Infrastructure.Development.json">
             <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
         </Content>
-        <Content Include="AppSettings\Configurations\appsettings.global.json">
+        <Content Include="AppSettings\Configurations\appsettings.Infrastructure.global.json">
             <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

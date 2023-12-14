@@ -11,8 +11,8 @@ using Spark.NET.Infrastructure.Contexts;
 namespace Spark.NET.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231129232148_RemovedDefaultIdentityProperties")]
-    partial class RemovedDefaultIdentityProperties
+    [Migration("20231211231040_133468098378309117")]
+    partial class _133468098378309117
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -174,11 +174,9 @@ namespace Spark.NET.Infrastructure.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("LockoutEnabled")

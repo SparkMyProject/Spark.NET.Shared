@@ -9,12 +9,12 @@ namespace Spark.NET.Infrastructure.Services.Authentication;
 public class JwtMiddleware
 {
     private readonly RequestDelegate _next;
-    private readonly Infrastructure.AppSettings.Models.AppSettings _appSettings;
+    private readonly Infrastructure.AppSettings.Models.InfrastructureAppSettings _infrastructureAppSettings;
 
-    public JwtMiddleware(RequestDelegate next, IOptions<Infrastructure.AppSettings.Models.AppSettings> appSettings)
+    public JwtMiddleware(RequestDelegate next, IOptions<Infrastructure.AppSettings.Models.InfrastructureAppSettings> appSettings)
     {
         _next = next;
-        _appSettings = appSettings.Value;
+        _infrastructureAppSettings = appSettings.Value;
     }
 
     public async Task Invoke(HttpContext context, IUserService userService)
@@ -33,7 +33,7 @@ public class JwtMiddleware
         try
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.SecretKeys.JwtSecret);
+            var key = Encoding.ASCII.GetBytes(_infrastructureAppSettings.SecretKeys.JwtSecret);
             tokenHandler.ValidateToken(token, new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,

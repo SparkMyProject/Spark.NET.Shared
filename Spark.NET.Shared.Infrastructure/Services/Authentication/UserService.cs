@@ -28,13 +28,13 @@ public interface IUserService
 public class UserService : IUserService
 {
 
-    private readonly AppSettings _appSettings;
+    private readonly InfrastructureAppSettings _infrastructureAppSettings;
     private readonly ApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
 
-    public UserService(IOptions<AppSettings> appSettings, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+    public UserService(IOptions<InfrastructureAppSettings> appSettings, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
     {
-        _appSettings = appSettings.Value;
+        _infrastructureAppSettings = appSettings.Value;
         _context = context;
         _userManager = userManager;
     }
@@ -62,17 +62,24 @@ public class UserService : IUserService
             Id = Guid.NewGuid().ToString()
             
         };
-        var result = await _userManager.CreateAsync(user, model.Password);
-        if (result.Succeeded)
+        try
         {
-            var token = generateJwtToken(user);
-            
-            return new ServiceResponse(new {token});
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                var token = generateJwtToken(user);
+
+                return new ServiceResponse(new { token });
+            }
+            else
+            {
+                return new ServiceResponse(ApiErrorMessages.GenericError, true, result);
+            }
         }
-        else
+        catch(Exception e)
         {
-            return new ServiceResponse(ApiErrorMessages.GenericError, true, result);
-        };
+            return new ServiceResponse(e.Message, true);
+        }
     }
     
 
@@ -87,7 +94,7 @@ public class UserService : IUserService
     {
         // generate token that is valid for 7 days
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_appSettings.SecretKeys.JwtSecret);
+        var key = Encoding.ASCII.GetBytes(_infrastructureAppSettings.SecretKeys.JwtSecret);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),

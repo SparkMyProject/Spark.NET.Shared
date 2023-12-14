@@ -5,69 +5,50 @@
 namespace Spark.NET.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class RemovedDefaultIdentityProperties : Migration
+    public partial class _133468098378309117 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Password",
-                table: "AspNetUsers");
-
             migrationBuilder.AlterColumn<string>(
-                name: "UserName",
+                name: "LastName",
                 table: "AspNetUsers",
                 type: "TEXT",
-                maxLength: 256,
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "TEXT",
-                oldMaxLength: 256);
+                oldType: "TEXT");
 
             migrationBuilder.AlterColumn<string>(
-                name: "Email",
+                name: "FirstName",
                 table: "AspNetUsers",
                 type: "TEXT",
-                maxLength: 256,
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "TEXT",
-                oldMaxLength: 256);
+                oldType: "TEXT");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "UserName",
+                name: "LastName",
                 table: "AspNetUsers",
                 type: "TEXT",
-                maxLength: 256,
                 nullable: false,
                 defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "TEXT",
-                oldMaxLength: 256,
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "Email",
+                name: "FirstName",
                 table: "AspNetUsers",
                 type: "TEXT",
-                maxLength: 256,
                 nullable: false,
                 defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "TEXT",
-                oldMaxLength: 256,
                 oldNullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "Password",
-                table: "AspNetUsers",
-                type: "TEXT",
-                nullable: false,
-                defaultValue: "");
         }
     }
 }
