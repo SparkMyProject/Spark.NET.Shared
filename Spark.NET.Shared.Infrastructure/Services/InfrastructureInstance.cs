@@ -1,3 +1,4 @@
+using System.Configuration;
 using System.Reflection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -83,27 +84,27 @@ public class InfrastructureInstance
         var config = Configuration.Get<Infrastructure.AppSettings.Models.InfrastructureAppSettings>();
 
         return logger ?? new LoggerConfiguration().WriteTo.Console()
-            //.WriteTo.Seq("http://localhost:5341",
-            //   apiKey: config?.SecretKeys.SeqLoggingSecretKeys.SeqLoggingSecretInfrastructure)
-            //  .Enrich.WithProperty("Environment", Env)
-            //.Enrich.WithProperty("Project", $"{config?.ProjectName}.Infrastructure")
-            .WriteTo.Sentry(x =>
+            .WriteTo.Seq("http://localhost:5341",
+               apiKey: config?.SecretKeys.SeqLoggingSecretKeys.SeqLoggingSecretInfrastructure)
+              .Enrich.WithProperty("Environment", Env)
+            .Enrich.WithProperty("Project", $"{config?.ProjectName}.Infrastructure")
+            .WriteTo.Sentry(x => // This is for Sentry Error Tracking
             {
                 x.Dsn = config?.SecretKeys.SentryDSN;
                 x.Debug = Env == "Development"; // If Env == Development, then enable Debug mode
                 x.AutoSessionTracking = true;
                 x.EnableTracing = true;
             })
-            .WriteTo.Sentry(o =>
+            .WriteTo.Sentry(o => // This is for DataDog Error Tracking
             {
                 o.Dsn = config?.SecretKeys.SentryDataDogDSN;
                 o.BeforeSend = @event =>
                 {
-                    @event.SetTag("service", "Spark.NET.Infrastructure");
+                    @event.SetTag("service", config?.ProjectName!);
                     return @event;
                 };
             })
-            .WriteTo.DatadogLogs(config?.SecretKeys.DataDogApiKey)
+            .WriteTo.DatadogLogs(config?.SecretKeys.DataDogApiKey, service: config?.ProjectName) // This is for DataDog Logging
             .CreateLogger();
             // .Enrich.WithProperty("Environment", environment)
             // .Enrich.WithProperty("Project", $"{appSettings?.ProjectName}.API"));
