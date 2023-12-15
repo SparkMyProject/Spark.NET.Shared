@@ -1,5 +1,7 @@
+using System.Collections.Immutable;
 using System.Configuration;
 using System.Reflection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -20,20 +22,21 @@ namespace Spark.NET.Infrastructure.Services;
 
 public class InitializeInfrastructure
 {
+    public readonly WebApplicationBuilder Builder;
     public readonly IServiceCollection Services;
     public readonly string Env;
     public readonly IConfiguration Configuration;
     public readonly ILogger InfraLogger; // This is the InfrastructureLogger
     public readonly Infrastructure.AppSettings.Models.AppSettings? AppSettings;
 
-    public InitializeInfrastructure(IServiceCollection services, string environment, IConfiguration? appSettingsConfiguration = null,
+    public InitializeInfrastructure(WebApplicationBuilder builder, string environment, IConfiguration? appSettingsConfiguration = null,
         ILogger? logger = null)
     {
-        Services = services;
+        Builder = builder;
+        Services = builder.Services;
         Env = environment;
         Configuration = RegisterConfiguration(appSettingsConfiguration);
-        InfraLogger = ConfigureLogger( Configuration.Get<AppSettings.Models.AppSettings>()?.ProjectName + ".Infrastructure"); // You may use the same logger as the API, or a different one. Just pass logger through.
-        
+        InfraLogger = ConfigureInfrastructureLogger(); // You may use the same logger as the API, or a different one. Just pass logger through.
         AppSettings = Configuration.Get<Infrastructure.AppSettings.Models.AppSettings>();
         InfraLogger.Information("InfrastructureInstance created.");
         RegisterServices();
@@ -61,14 +64,12 @@ public class InitializeInfrastructure
     private void RegisterServices()
     {
         // Register ApiLogging
-        Services.AddSingleton(ConfigureLogger( Configuration.Get<AppSettings.Models.AppSettings>()?.ProjectName + ".Infrastructure")); // You may use the same logger as the API, or a different one. Just pass logger through.
 
         Services.AddControllers();
         Services.AddEndpointsApiExplorer();
         Services.AddSwaggerGen();
         Services.AddOptions();
         Services.AddRazorPages();
-
 
         // Add all of your services here
         Services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
@@ -88,7 +89,7 @@ public class InitializeInfrastructure
         // configure DI for application services
     }
 
-    private ILogger ConfigureLogger(string projectName)
+    private ILogger ConfigureInfrastructureLogger()
     {
         var config = Configuration.Get<Infrastructure.AppSettings.Models.AppSettings>();
 
@@ -109,7 +110,7 @@ public class InitializeInfrastructure
                 o.Dsn = config?.SecretKeys.SentryDataDogDSN;
                 o.BeforeSend = @event =>
                 {
-                    @event.SetTag("service", config?.ProjectName!);
+                    @event.SetTag("service", config?.ProjectName + ".Infrastructure");
                     return @event;
                 };
             })
@@ -118,5 +119,8 @@ public class InitializeInfrastructure
         // .Enrich.WithProperty("Environment", environment)
         // .Enrich.WithProperty("Project", $"{appSettings?.ProjectName}.API"));
     }
-    
+    public AppSettings.Models.AppSettings GetAppSettings()
+    {
+        return Configuration.Get<AppSettings.Models.AppSettings>();
+    }
 }
