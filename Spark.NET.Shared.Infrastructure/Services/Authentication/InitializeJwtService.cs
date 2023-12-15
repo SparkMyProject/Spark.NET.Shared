@@ -8,7 +8,7 @@ namespace Spark.NET.Infrastructure.Services.Authentication;
 
 public static class AddAuthenticationService
 {
-    public static void RegisterService(IServiceCollection services, IConfiguration configuration, Infrastructure.AppSettings.Models.InfrastructureAppSettings infrastructureAppSettings)
+    public static void RegisterService(IServiceCollection services, IConfiguration configuration, Infrastructure.AppSettings.Models.AppSettings appSettings)
     {
         services.AddAuthentication(options =>
             {
@@ -27,7 +27,7 @@ public static class AddAuthenticationService
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = "apiWithAuthBackend",
                     ValidAudience = "apiWithAuthBackend",
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(infrastructureAppSettings.SecretKeys.JwtSecret))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(appSettings.SecretKeys.JwtSecret))
                 };
             });
 

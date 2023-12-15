@@ -28,13 +28,13 @@ public interface IUserService
 public class UserService : IUserService
 {
 
-    private readonly InfrastructureAppSettings _infrastructureAppSettings;
+    private readonly AppSettings _appSettings;
     private readonly ApplicationDbContext _context;
     private readonly UserManager<ApplicationUser> _userManager;
 
-    public UserService(IOptions<InfrastructureAppSettings> appSettings, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+    public UserService(IOptions<AppSettings> appSettings, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
     {
-        _infrastructureAppSettings = appSettings.Value;
+        _appSettings = appSettings.Value;
         _context = context;
         _userManager = userManager;
     }
@@ -94,7 +94,7 @@ public class UserService : IUserService
     {
         // generate token that is valid for 7 days
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_infrastructureAppSettings.SecretKeys.JwtSecret);
+        var key = Encoding.ASCII.GetBytes(_appSettings.SecretKeys.JwtSecret);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),

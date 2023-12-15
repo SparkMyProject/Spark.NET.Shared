@@ -1,6 +1,6 @@
 namespace Spark.NET.Infrastructure.AppSettings.Models;
 
-public class InfrastructureAppSettings
+public class AppSettings
 {
     public SecretKeysSettings SecretKeys { get; set; }
     public ConnectionStringsSettings ConnectionStrings { get; set; }
