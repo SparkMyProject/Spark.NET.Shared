@@ -69,6 +69,9 @@ public class InfrastructureInstance
 
         Services.AddScoped<UserManager<ApplicationUser>>();
         Services.AddScoped<IUserService, UserService>();
+        
+        // Register settings file
+        Services.Configure<InfrastructureAppSettings>(Configuration);
 
 
         // The services below do not use DI, so they are not registered as scoped services.
