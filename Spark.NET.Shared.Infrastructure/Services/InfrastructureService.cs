@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Sentry;
+using Sentry.Protocol;
 using Sentry.Serilog;
 using Serilog;
 using Spark.NET.Infrastructure.AppSettings.Models;
@@ -20,48 +21,37 @@ using Spark.NET.Shared.Entities.Models.User;
 
 namespace Spark.NET.Infrastructure.Services;
 
-public class InitializeInfrastructure
+public class InfrastructureService
 {
-    public readonly WebApplicationBuilder Builder;
-    public readonly IServiceCollection Services;
-    public readonly string Env;
-    public readonly IConfiguration Configuration;
-    public readonly ILogger InfraLogger; // This is the InfrastructureLogger
-    public readonly Infrastructure.AppSettings.Models.AppSettings? AppSettings;
-
-    public InitializeInfrastructure(WebApplicationBuilder builder, string environment, IConfiguration? appSettingsConfiguration = null,
-        ILogger? logger = null)
+    private IConfiguration Configuration { get; }
+    private AppSettings.Models.AppSettings? AppSettings { get; }
+    private string Env { get; }
+    private WebApplicationBuilder Builder { get; }
+    private IServiceCollection Services => Builder.Services;
+    public InfrastructureService(WebApplicationBuilder builder, string environment)
     {
         Builder = builder;
-        Services = builder.Services;
         Env = environment;
-        Configuration = RegisterConfiguration(appSettingsConfiguration);
-        InfraLogger = ConfigureInfrastructureLogger(); // You may use the same logger as the API, or a different one. Just pass logger through.
-        AppSettings = Configuration.Get<Infrastructure.AppSettings.Models.AppSettings>();
-        InfraLogger.Information("InfrastructureInstance created.");
-        RegisterServices();
+        Configuration = GetConfiguration();
+        AppSettings = Configuration.Get<AppSettings.Models.AppSettings>();
     }
 
-    private IConfiguration RegisterConfiguration(IConfiguration? appSettingsConfiguration)
+
+    public IConfiguration GetConfiguration()
     {
         var x = AppDomain.CurrentDomain.BaseDirectory;
 
-        return appSettingsConfiguration ?? new ConfigurationBuilder()
+        var configBuilder = new ConfigurationBuilder()
             .AddEnvironmentVariables()
             .AddJsonFile(Path.Join(x, $"./AppSettings/Configurations/appsettings.{Env}.json"),
                 optional: false)
             .AddJsonFile(Path.Join(x, $"./AppSettings/Configurations/appsettings.global.json"),
                 optional: false)
             .Build();
+        return configBuilder;
     }
-    //
-    // public static void RegisterServicesDiscovery(IServiceCollection services, params Assembly[] assemblies)
-    // {
-    //     // services.AddServiced(assemblies);
-    //     // services.AddAutoMapper(assemblies);
-    // }
 
-    private void RegisterServices()
+    public void RegisterServices()
     {
         // Register ApiLogging
 
@@ -83,44 +73,44 @@ public class InitializeInfrastructure
 
         // The services below do not use DI, so they are not registered as scoped services.
         ApplicationDbContext.RegisterService(Services, Configuration);
-        AddAuthenticationService.RegisterService(Services, Configuration, AppSettings);
+        JwtService.RegisterService(Services, AppSettings);
 
 
         // configure DI for application services
     }
 
-    private ILogger ConfigureInfrastructureLogger()
+    public void ConfigureLogger()
     {
         var config = Configuration.Get<Infrastructure.AppSettings.Models.AppSettings>();
 
-        return new LoggerConfiguration().WriteTo.Console()
+        // Add Api Logging
+        var appSettings = Configuration.Get<Infrastructure.AppSettings.Models.AppSettings>();
+        Builder.Host.UseSerilog((ctx, lc) => lc
+            .WriteTo.Console()
             .WriteTo.Seq("http://localhost:5341",
-                apiKey: config?.SecretKeys.SeqLoggingSecretKeys.SeqLoggingSecretInfrastructure)
+                apiKey: appSettings?.SecretKeys.SeqLoggingSecretKeys.SeqLoggingSecretInfrastructure)
             .Enrich.WithProperty("Environment", Env)
-            .Enrich.WithProperty("Project", $"{config?.ProjectName}.Infrastructure")
             .WriteTo.Sentry(x => // This is for Sentry Error Tracking
             {
-                x.Dsn = config?.SecretKeys.SentryDSN;
+                x.Dsn = appSettings?.SecretKeys.SentryDSN;
                 x.Debug = Env == "Development"; // If Env == Development, then enable Debug mode
                 x.AutoSessionTracking = true;
                 x.EnableTracing = true;
             })
             .WriteTo.Sentry(o => // This is for DataDog Error Tracking
             {
-                o.Dsn = config?.SecretKeys.SentryDataDogDSN;
+                o.Dsn = appSettings?.SecretKeys.SentryDataDogDSN;
                 o.BeforeSend = @event =>
                 {
-                    @event.SetTag("service", config?.ProjectName + ".Infrastructure");
+                    @event.SetTag("service", appSettings.ProjectName);
                     return @event;
                 };
             })
-            .WriteTo.DatadogLogs(config?.SecretKeys.DataDogApiKey, service: config?.ProjectName) // This is for DataDog Logging
-            .CreateLogger();
-        // .Enrich.WithProperty("Environment", environment)
-        // .Enrich.WithProperty("Project", $"{appSettings?.ProjectName}.API"));
+            .WriteTo.DatadogLogs(appSettings?.SecretKeys.DataDogApiKey, service: appSettings.ProjectName)); // This is for DataDog Logging
     }
+
     public AppSettings.Models.AppSettings GetAppSettings()
     {
-        return Configuration.Get<AppSettings.Models.AppSettings>();
+        return AppSettings;
     }
 }

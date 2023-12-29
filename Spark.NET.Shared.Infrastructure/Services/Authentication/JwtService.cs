@@ -6,9 +6,9 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Spark.NET.Infrastructure.Services.Authentication;
 
-public static class AddAuthenticationService
+public static class JwtService
 {
-    public static void RegisterService(IServiceCollection services, IConfiguration configuration, Infrastructure.AppSettings.Models.AppSettings appSettings)
+    public static void RegisterService(IServiceCollection services, AppSettings.Models.AppSettings? appSettings)
     {
         services.AddAuthentication(options =>
             {
