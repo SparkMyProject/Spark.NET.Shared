@@ -5,14 +5,14 @@ namespace Spark.NET.Shared.Entities.DTOs.API;
 
 public class ApiResponse
 {
-    public HttpStatusCode HttpCode { get; set; } = HttpStatusCode.OK;
+    public HttpStatusCode Status { get; set; } = HttpStatusCode.OK;
     public string? Message { get; set; }
-    public Object Payload { get; set; }
+    public Object Payload { get; set; } = new { };
 
     public ApiResponse(HttpStatusCode code, string message)
     {
         Message = message;
-        HttpCode = code;
+        Status = code;
     }
 
     public ApiResponse( HttpStatusCode code, string message, Object payload)
@@ -20,7 +20,7 @@ public class ApiResponse
         Message = message;
         Payload = payload;
 
-        HttpCode = code;
+        Status = code;
     }
 
     public ApiResponse(Object payload)
@@ -31,7 +31,7 @@ public class ApiResponse
     public ApiResponse( HttpStatusCode code, Object payload)
     {
         Payload = payload;
-        HttpCode = code;
+        Status = code;
     }
 
 }

@@ -69,12 +69,10 @@ public class UserService : IUserService
             {
                 var token = generateJwtToken(user);
 
-                return new ServiceResponse(new { token });
+                return new ServiceResponse("User created successfully.", false, new { token });
             }
-            else
-            {
-                return new ServiceResponse(ApiErrorMessages.GenericError, true, result);
-            }
+
+            return new ServiceResponse("Username already exists.", true, result);
         }
         catch(Exception e)
         {
