@@ -20,7 +20,7 @@ using Spark.NET.Shared.Entities.Models.User;
 
 public interface IUserService
 {
-    Task<AuthenticateResponse> Authenticate(AuthenticateRequest model);
+    Task<ServiceResponse> Authenticate(AuthenticateRequest model);
     Task<ApplicationUser> GetById(string id);
     Task<ServiceResponse> Register(RegisterRequest model);
 }
@@ -39,18 +39,18 @@ public class UserService : IUserService
         _userManager = userManager;
     }
 
-    public async Task<AuthenticateResponse> Authenticate(AuthenticateRequest model)
+    public async Task<ServiceResponse> Authenticate(AuthenticateRequest model)
     {
         var user = await _userManager.FindByNameAsync(model.UserName);
 
-        // return null if user not found
-        if (user == null) return null;
-        if (!await _userManager.CheckPasswordAsync(user, model.Password)) return null;
+        // By having separate error messages below, it tells the user that a user might exist, which is a security risk.
+        if (user == null) return new ServiceResponse("UserName or Password not found.", true, user);
+        if (!await _userManager.CheckPasswordAsync(user, model.Password)) return new ServiceResponse("UserName or Password is incorrect.", true, user);
         // authentication successful so generate jwt token
         var token = generateJwtToken(user);
-        
+        Object payload = new { User = user, Token = token };
 
-        return new AuthenticateResponse(user, token);
+        return new ServiceResponse(payload);
 
     }
     

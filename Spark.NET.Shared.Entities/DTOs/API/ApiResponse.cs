@@ -9,13 +9,13 @@ public class ApiResponse
     public string? Message { get; set; }
     public Object Payload { get; set; }
 
-    public ApiResponse(string message, HttpStatusCode code)
+    public ApiResponse(HttpStatusCode code, string message)
     {
         Message = message;
         HttpCode = code;
     }
 
-    public ApiResponse(string message, HttpStatusCode code, Object payload)
+    public ApiResponse( HttpStatusCode code, string message, Object payload)
     {
         Message = message;
         Payload = payload;
@@ -28,7 +28,7 @@ public class ApiResponse
         Payload = Payload;
     }
 
-    public ApiResponse(Object payload, HttpStatusCode code)
+    public ApiResponse( HttpStatusCode code, Object payload)
     {
         Payload = payload;
         HttpCode = code;
