@@ -53,15 +53,14 @@ public class InfrastructureService
 
     public void RegisterServices()
     {
-        // Register ApiLogging
-
+        // Add all of your services here
         Services.AddControllers();
         Services.AddEndpointsApiExplorer();
         Services.AddSwaggerGen();
         Services.AddOptions();
         Services.AddRazorPages();
 
-        // Add all of your services here
+
         Services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
         Services.AddScoped<UserManager<ApplicationUser>>();
