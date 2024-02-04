@@ -71,8 +71,9 @@ public class UserService : IUserService
 
                 return new ServiceResponse("User created successfully.", false, new { token });
             }
-
-            return new ServiceResponse("Username already exists.", true, result);
+            // Get the error messages
+            var errorMessages = result.Errors.Select(e => e.Description).ToList();
+            return new ServiceResponse(errorMessages.FirstOrDefault(), true, result.Errors); // This is the message that is displayed to the user.
         }
         catch(Exception e)
         {
