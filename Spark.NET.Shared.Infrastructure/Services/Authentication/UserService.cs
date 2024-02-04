@@ -23,6 +23,7 @@ public interface IUserService
     Task<ServiceResponse> Authenticate(AuthenticateRequest model);
     Task<ApplicationUser> GetById(string id);
     Task<ServiceResponse> Register(RegisterRequest model);
+    Task<ServiceResponse> DisableAccount(DisableAccountRequest model);
 }
 
 public class UserService : IUserService
@@ -45,6 +46,7 @@ public class UserService : IUserService
 
         // By having separate error messages below, it tells the user that a user might exist, which is a security risk.
         if (user == null) return new ServiceResponse("UserName or Password not found.", true, user);
+        if (user.IsDisabled) return new ServiceResponse("User is disabled.", true, user);
         if (!await _userManager.CheckPasswordAsync(user, model.Password)) return new ServiceResponse("UserName or Password is incorrect.", true, user);
         // authentication successful so generate jwt token
         var token = generateJwtToken(user);
@@ -79,6 +81,17 @@ public class UserService : IUserService
         {
             return new ServiceResponse(e.Message, true);
         }
+    }
+
+    public async Task<ServiceResponse> DisableAccount(DisableAccountRequest model)
+    {
+        var user = await _userManager.FindByIdAsync(model.Id); // Get Current User Id
+        if (user == null) return new ServiceResponse("User not found.", true, user);
+        if (user.Id != model.Id) return new ServiceResponse("Id does not match with current account.", true, user);
+        if (!await _userManager.CheckPasswordAsync(user, model.Password)) return new ServiceResponse("Password is incorrect.", true, user);
+        user.IsDisabled = true;
+        await _userManager.UpdateAsync(user);
+        return new ServiceResponse("User disabled successfully.", false, user);
     }
     
 

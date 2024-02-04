@@ -21,4 +21,5 @@ public class ApplicationUser : IdentityUser<string>
     [DisplayName("Date of Birth")] public DateOnly DateOfBirth { get; set; }
     
     public string? Address { get; set; }
+    public bool IsDisabled { get; set; }
 }
